@@ -1,0 +1,40 @@
+Step 1: Update System Packages
+Before installing any new software, refresh your local package index and upgrade existing packages.
+
+sudo apt update
+sudo apt upgrade -y
+
+Step 2: Download Webmin Package
+Download the latest Debian package (.deb) directly from the official Webmin server.
+
+wget http://www.webmin.com/download/deb/webmin-current.deb
+
+Step 3: Install Webmin & Fix Dependencies
+Use dpkg to start the installation. If there are missing dependencies, apt -f will automatically detect and install them.
+
+sudo dpkg -i webmin-current.deb
+sudo apt -f install -y
+
+Step 4: Verify Service Status
+Check if the Webmin service is active and running correctly.
+
+sudo systemctl status webmin
+
+Step 5: Configure Login Credentials
+Set or change the password for your Webmin user (e.g., admin or root) to ensure you can log in via the web interface.
+
+sudo /usr/share/webmin/changepass.pl /etc/webmin <username> <password>
+
+Step 6: Configure Firewall (UFW)
+Webmin communicates over port 10000. You must allow this port through your firewall to access the dashboard.
+
+sudo ufw allow 10000/tcp
+sudo ufw enable
+sudo ufw status
+
+How to Access Webmin
+
+Once the installation is complete, open your web browser and navigate to:
+https://your-server-ip(public):10000
+
+Note: Since Webmin uses a self-signed SSL certificate by default, your browser might show a security warning. You can safely proceed to the site.
